@@ -1,0 +1,14 @@
+{% raw %}
+{% extends "!layout.html" %}
+
+{% block document %}
+{% endraw %}
+    {% if warning %}
+        <div class="buildthedocs-warning">
+            {{ warning }}
+        </div>
+    {% endif %}
+{% raw %}
+    {{ super() }}
+{% endblock %}
+{% endraw %}

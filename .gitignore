@@ -1,0 +1,8 @@
+# Some Python stuff
+__pycache__
+*.py[co]
+
+# Some setuptools stuff
+/build
+/dist
+/buildthedocs.egg-info
