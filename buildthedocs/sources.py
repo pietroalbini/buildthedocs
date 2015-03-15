@@ -22,7 +22,13 @@ def obtain_url(config, dest):
     os.unlink(archive_dest)
 
 
+def obtain_local(config, dest):
+    """ Obtain the source from the local filesystem """
+    shutil.copytree(config["source"]["path"], dest)
+
+
 available = {
     "git": obtain_git,
     "url": obtain_url,
+    "local": obtain_local,
 }
