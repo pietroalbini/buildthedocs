@@ -1,3 +1,11 @@
+"""
+    buildthedocs.builder
+    Logic of the documentation builder
+
+    Copyright (c) 2015 Pietro Albini
+    Licensed under MIT license
+"""
+
 import subprocess
 import shutil
 import os
@@ -8,28 +16,34 @@ import pygit2
 import pkg_resources
 import jinja2
 
-import buildthedocs.sources as sources
+import buildthedocs.sources
 
 
-class Project:
-    """ Representation of a project """
+class Builder:
+    """ Instance of a builder """
 
     def __init__(self, config, output_to):
-        self.read_config(config)
-        self.output_to = output_to
-
-    def read_config(self, path):
-        """ Read and apply a configuration file """
-        with open(path) as f:
-            content = f.read()
-
-        parsed = yaml.load(content)
-
-        self.name = parsed['name']
-        self.default = parsed['default']
         self.versions = {version["name"]: version
-                         for version in parsed['versions']}
-        self.ordered_versions = parsed['versions']
+                         for version in config["versions"]}
+        self.ordered_versions = config["versions"]
+
+        self._output_to = output_to
+        self._source_providers = {}
+
+        # Register default source providers
+        for name, provider in buildthedocs.sources._available.items():
+            self.register_source_provider(name, provider)
+
+    def register_source_provider(self, name, provider):
+        """ Register a new source provider """
+        # Do some validation
+        if name in self._source_providers:
+            raise NameError('A source provider with the name "{}" already '
+                            'exists'.format(name))
+        if not callable(provider):
+            raise ValueError('The provider must be callable')
+
+        self._source_providers[name] = provider
 
     def build(self, version=None):
         """ Build a specific version """
@@ -53,13 +67,13 @@ class Project:
 class BuildProcess:
     """ A build process """
 
-    def __init__(self, project, version, details):
+    def __init__(self, builder, version, details):
         self._details = details
-        self.project = project
+        self.builder = builder
         self.version = version
 
         self.executed = False
-        self.output = os.path.join(project.output_to, version)
+        self.output = os.path.join(builder._output_to, version)
 
         # Clean up output directory and recreate dirs
         try:
@@ -81,7 +95,8 @@ class BuildProcess:
         """ Obtain the source code """
         # Get the source obtainer provider
         try:
-            provider = sources.available[self._details["source"]["provider"]]
+            provider = self.builder._source_providers[
+                                        self._details["source"]["provider"]]
         except KeyError:
             raise RuntimeError("Invalid source provider: {}".format(
                                self._details["source"]["provider"]))
@@ -96,7 +111,8 @@ class BuildProcess:
                             self._details["directory"])
 
         self._add_template(base, "sidebar_versions", {
-            "versions": self.project.ordered_versions,
+            "versions": self.builder.ordered_versions,
+            "current_version": self.version,
         }, True)
 
         self._add_template(base, "layout", {

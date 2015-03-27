@@ -1,6 +1,14 @@
+"""
+    buildthedocs.__main__
+    Console entry point for buildthedocs
+
+    Copyright (c) 2015 Pietro Albini
+    Licensed under MIT license
+"""
+
 import os
 import click
-import buildthedocs.builder
+import buildthedocs
 
 
 def error(message, *replace):
@@ -19,15 +27,4 @@ def main(config, version, output):
     if output == "":
         output = os.path.realpath("build")
 
-    project = buildthedocs.builder.Project(config, output)
-
-    # If no version was provided, build the entire project
-    # Else build each specified version
-    if len(version) == 0:
-        project.build()
-    else:
-        for one in version:
-            try:
-                project.build(one)
-            except ValueError:
-                error("version {} not found", one)
+    buildthedocs.build(config, *version, output=output)

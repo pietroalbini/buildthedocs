@@ -1,13 +1,19 @@
-<h3>Choose version</h3>
-<ul>
-    {% for version in versions %}
-        <li>
-            <a href="{% raw %}{{ pathto(master_doc).rstrip('#/') or '.' }}{% endraw %}/../{{ version.name }}">
-                {{ version.title }}
-                {% if version.notice %}
-                    <small>({{ version.notice }})</small>
-                {% endif %}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+<div class="buildthedocs-versions">
+    <h3>Choose version</h3>
+    <ul>
+        {% for version in versions %}
+            {% if version.name == current_version %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                <a href="{% raw %}{{ pathto(master_doc).rstrip('#/') or '.' }}{% endraw %}/../{{ version.name }}">
+                    {{ version.title }}
+                    {% if version.notice %}
+                        <small>({{ version.notice }})</small>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,3 +1,11 @@
+"""
+    buildthedocs.sources
+    Definition of default source providers
+
+    Copyright (c) 2015 Pietro Albini
+    Licensed under MIT license
+"""
+
 import os
 import urllib.request
 import shutil
@@ -27,7 +35,7 @@ def obtain_local(config, dest):
     shutil.copytree(config["source"]["path"], dest)
 
 
-available = {
+_available = {
     "git": obtain_git,
     "url": obtain_url,
     "local": obtain_local,
