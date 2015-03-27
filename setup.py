@@ -27,15 +27,15 @@ import setuptools
 setuptools.setup(
     name = "buildthedocs",
     version = "1.0a1",
-    url = "http://buildthedocs.pietroalbini.io"
+    url = "http://buildthedocs.pietroalbini.io",
 
     license = 'MIT',
 
     author = "Pietro Albini",
     author_email = "pietro@pietroalbini.io",
 
-    description = "A Sphinx documentation building tool on steroids."
-    long_description = __doc__
+    description = "A Sphinx documentation building tool on steroids.",
+    long_description = __doc__,
 
     install_requires = [
         'sphinx',
