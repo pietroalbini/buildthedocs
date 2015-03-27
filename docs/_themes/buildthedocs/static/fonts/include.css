@@ -1,0 +1,83 @@
+/* Ubuntu regular */
+@font-face { /* IE */
+    font-family: 'Ubuntu';
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/regular.eot');
+}
+@font-face { /* Browsers */
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/regular.ttf') format('truetype');
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/regular.woff') format('woff');
+}
+
+
+/* Ubuntu regular-italic */
+@font-face { /* IE */
+    font-family: 'Ubuntu';
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/regular-italic.eot');
+}
+@font-face { /* Browsers */
+    font-family: 'Ubuntu';
+    font-style: italic;
+    font-weight: 400;
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/regular-italic.ttf') format('truetype');
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/regular-italic.woff') format('woff');
+}
+
+
+/* Ubuntu medium */
+@font-face { /* IE */
+    font-family: 'Ubuntu';
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/medium.eot');
+}
+@font-face { /* Browsers */
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 500;
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/medium.ttf') format('truetype');
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/medium.woff') format('woff');
+}
+
+
+/* Ubuntu medium-italic */
+@font-face { /* IE */
+    font-family: 'Ubuntu';
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/medium-italic.eot');
+}
+@font-face { /* Browsers */
+    font-family: 'Ubuntu';
+    font-style: italic;
+    font-weight: 500;
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/medium-italic.ttf') format('truetype');
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/medium-italic.woff') format('woff');
+}
+
+
+/* Ubuntu bold */
+@font-face { /* IE */
+    font-family: 'Ubuntu';
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/bold.eot');
+}
+@font-face { /* Browsers */
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/bold.ttf') format('truetype');
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/bold.woff') format('woff');
+}
+
+
+/* Ubuntu bold-italic */
+@font-face { /* IE */
+    font-family: 'Ubuntu';
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/bold-italic.eot');
+}
+@font-face { /* Browsers */
+    font-family: 'Ubuntu';
+    font-style: italic;
+    font-weight: 700;
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/bold-italic.ttf') format('truetype');
+    src: url('http://assets.pietroalbini.io/fonts/ubuntu/bold-italic.woff') format('woff');
+}
+

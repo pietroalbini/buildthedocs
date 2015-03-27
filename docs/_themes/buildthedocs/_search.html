@@ -1,0 +1,24 @@
+{% extends "basic/search.html" %}
+
+{% set title = "Search in the docs" %}
+
+{% block body %}
+    <h1>Search in the docs</h1>
+    <div id="fallback">
+        <script type="text/javascript">$("#fallback").hide();</script>
+        <p>
+            <b>Warning</b>: you need to enable JavaScript in order to use the
+            search.
+        </p>
+    </div>
+    <p>
+        From this page you can search in all the documentation. Remember it
+        shows only documents with all the words you entered.
+    </p>
+    <div class="search-box">
+        <form action="" method="get">
+            <input type="text" name="q" value="" placeholder="Enter here the search terms">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+{% endblock %} 
