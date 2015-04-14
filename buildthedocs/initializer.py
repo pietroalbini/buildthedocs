@@ -1,0 +1,83 @@
+"""
+    buildthedocs.initializer
+    Collect initializers and apply them to the Builder
+
+    Copyright (c) 2015 Pietro Albini
+    Licensed under MIT license
+"""
+
+import pkg_resources
+
+from buildthedocs import sources
+
+
+class Collector:
+    """ Collect initializers """
+
+    def __init__(self):
+        self._collected = {}
+
+    def collect(self, entry_point):
+        """ Collect from setuptools entry points """
+        splitted = entry_point.split(':', 1)
+        for one in pkg_resources.iter_entry_points(*splitted):
+            loaded = one.load()
+
+            # Create an initializer instance, and fill it
+            initializer = Initializer()
+            loaded(initializer)
+            self._collected[one.dist.key] = initializer
+
+    def apply(self, obj, only=None):
+        """ Apply all collector """
+        # If "only" is provided, apply initializers only from that packages
+        if only is not None:
+            initializers = [value for key, value in self._collected.items()
+                            if key in only]
+        else:
+            initializers = list(self._collected.values())
+
+        for initializer in initializers:
+            obj = initializer._apply(obj)
+        return obj
+
+
+class Initializer:
+    """ An initializer class
+
+    This will record all the calls made to this class' methods, so them can be
+    applied to another object
+    """
+
+    def __init__(self):
+        self._recorded = []
+
+    def __getattribute__(self, key):
+        # Ignore private and magic methods
+        if key.startswith('_'):
+            return object.__getattribute__(self, key)
+
+        # This stub will be returned, and each call you made to it will be
+        # recorded
+        def stub(*args, **kwargs):
+            # Build a function which calls the wanted method
+            def call(obj):
+                getattr(obj, key)(*args, **kwargs)
+                return obj
+            self._recorded.append(call)
+        stub.__name__ = key
+
+        return stub
+
+    def _apply(self, obj):
+        """ Apply all recorded calls to an object """
+        for call in self._recorded:
+            obj = call(obj)
+        return obj
+
+
+def core_initializer(initializer):
+    """ Initialize the core elements of BuildTheDocs """
+    initializer.register_source_provider("local", sources.obtain_local)
+    initializer.register_source_provider("url", sources.obtain_url)
+    initializer.register_source_provider("git", sources.obtain_git)

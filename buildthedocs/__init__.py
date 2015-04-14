@@ -9,7 +9,13 @@
 import yaml
 import os
 
+from buildthedocs import initializer
 from buildthedocs.builder import Builder
+
+
+# Setup the initializer
+_initializer = initializer.Collector()
+_initializer.collect('buildthedocs:initializer')
 
 
 def build(config, *versions, output="build", source_providers=None):

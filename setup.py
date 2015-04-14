@@ -53,6 +53,9 @@ setuptools.setup(
         'console_scripts': [
             'buildthedocs = buildthedocs.__main__:main',
         ],
+        'buildthedocs': [
+            'initializer = buildthedocs.initializer:core_initializer',
+        ],
     },
 
     include_package_data = True,

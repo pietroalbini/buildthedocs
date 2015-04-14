@@ -16,13 +16,13 @@ import pygit2
 import pkg_resources
 import jinja2
 
-import buildthedocs.sources
+import buildthedocs
 
 
 class Builder:
     """ Instance of a builder """
 
-    def __init__(self, config, output_to):
+    def __init__(self, config, output_to, only_inits=None, initializer=None):
         self.versions = {version["name"]: version
                          for version in config["versions"]}
         self.ordered_versions = config["versions"]
@@ -30,9 +30,12 @@ class Builder:
         self._output_to = output_to
         self._source_providers = {}
 
-        # Register default source providers
-        for name, provider in buildthedocs.sources._available.items():
-            self.register_source_provider(name, provider)
+        # If no initializator is provided, use the global one
+        if initializer is None:
+            initializer = buildthedocs._initializer
+
+        # Apply all the wanted initializators to this object
+        initializer.apply(self, only_inits)
 
     def register_source_provider(self, name, provider):
         """ Register a new source provider """
