@@ -9,6 +9,7 @@
 import subprocess
 import shutil
 import os
+import json
 
 import yaml
 import sphinx.application
@@ -17,6 +18,11 @@ import pkg_resources
 import jinja2
 
 import buildthedocs
+from buildthedocs import utils
+
+
+class BuildError(Exception):
+    """ Error occured during a build """
 
 
 class Builder:
@@ -29,6 +35,7 @@ class Builder:
 
         self._output_to = output_to
         self._source_providers = {}
+        self._hooks = []
 
         # If no initializator is provided, use the global one
         if initializer is None:
@@ -48,6 +55,13 @@ class Builder:
 
         self._source_providers[name] = provider
 
+    def register_hook(self, hook):
+        """ Register a new hook """
+        if not callable(hook):
+            raise ValueError('The provider must be callable')
+
+        self._hooks.append(hook)
+
     def build(self, version=None):
         """ Build a specific version """
         # If no version was provided build all the versions
@@ -64,32 +78,64 @@ class Builder:
         process = BuildProcess(self, version, self.versions[version])
         process.execute()
 
-        return process.output
+        return process.output_dir
 
 
 class BuildProcess:
     """ A build process """
 
-    def __init__(self, builder, version, details):
-        self._details = details
+    def __init__(self, builder, version, config):
+        self.config = config
         self.builder = builder
         self.version = version
 
-        self.executed = False
-        self.output = os.path.join(builder._output_to, version)
+        if "directory" in config:
+            extra_source = config["directory"]
+        else:
+            extra_source = ""
 
-        # Clean up output directory and recreate dirs
+        # Define some directory names
+        self.output_dir = os.path.join(builder._output_to, version)
+        self.btd_dir = os.path.join(self.output_dir, "__btd__")
+        self.source_dir = os.path.join(self.btd_dir, "source", extra_source)
+
+        self._sidebars = []
+
+        # Clean up output directory and recreate them
         try:
-            shutil.rmtree(self.output)
+            shutil.rmtree(self.output_dir)
         except FileNotFoundError:
             pass
-        os.makedirs(os.path.join(self.output, "__buildthedocs__"))
+        os.makedirs(self.btd_dir)
+
+    def add_template(self, name, content, alter_name=False):
+        """ Add a custom template """
+        # Try to create the directory
+        templates_dir = os.path.join(self.source_dir, "__btd_templates__")
+        os.makedirs(templates_dir, exist_ok=True)
+
+        # Altering the name prevents conflicts
+        if alter_name:
+            name = "__btd_"+name+"__"
+        name += ".html"
+
+        # Save the file
+        with open(os.path.join(templates_dir, name), "w") as f:
+            f.write(content)
+
+    def add_sidebar(self, name, content):
+        """ Add a custom sidebar """
+        name = "sidebar_"+name
+
+        self.add_template(name, content, True)
+        self._sidebars.append("__btd_"+name+"__.html")
 
     def execute(self):
         """ Execute the process """
         try:
             self._obtain_source()
-            self._patch_documentation()
+            self._call_hooks()
+            self._add_extra_config()
             self._execute_build()
         finally:
             self._cleanup()
@@ -98,61 +144,39 @@ class BuildProcess:
         """ Obtain the source code """
         # Get the source obtainer provider
         try:
-            provider = self.builder._source_providers[
-                                        self._details["source"]["provider"]]
+            name = self.config["source"]["provider"]
         except KeyError:
-            raise RuntimeError("Invalid source provider: {}".format(
-                               self._details["source"]["provider"]))
+            raise BuildError("Please specify a source provider")
 
-        # Obtain the source
-        dest = os.path.join(self.output, "__buildthedocs__", "source")
-        provider(self._details, dest)
+        try:
+            provider = self.builder._source_providers[name]
+        except KeyError:
+            raise BuildError("Invalid source provider: {}".format(name))
 
-    def _patch_documentation(self):
-        """ Patch the documentation to obtain the result we want """
-        base = os.path.join(self.output, "__buildthedocs__", "source",
-                            self._details["directory"])
+        # Redefine source_dir to avoid having the config["directory"] in it
+        source_dir = os.path.join(self.btd_dir, "source")
+        provider(self.config, source_dir)  # Obtain the source
 
-        self._add_template(base, "sidebar_versions", {
-            "versions": self.builder.ordered_versions,
-            "current_version": self.version,
-        }, True)
+    def _call_hooks(self):
+        """ Call all the hooks """
+        for hook in self.builder._hooks:
+            hook(self.builder, self)  # Call the hook
 
-        self._add_template(base, "layout", {
-            "warning": self._details["warning"],
+    def _add_extra_config(self):
+        """ Append to the documentation's config file the new config """
+        extra_conf = utils.get_resource("extra_conf.py", {
+            "sidebars": json.dumps(self._sidebars),
         })
 
-        self._add_extra_config(base)
-
-    def _add_template(self, base, name, data, alter=False):
-        """ Add a custom template """
-        result = self._get_resource(name+".html", data)
-
-        # Try to create the directory
-        try:
-            os.makedirs(os.path.join(base, "__buildthedocs_templates__"))
-        except FileExistsError:
-            pass
-
-        # Save the file
-        if alter:
-            final_name = "__buildthedocs_"+name+"__.html"
-        else:
-            final_name = name+".html"
-        tpl_base = os.path.join(base, "__buildthedocs_templates__")
-        self._save_file(tpl_base, final_name, result)
-
-    def _add_extra_config(self, base):
-        """ Append to the documentation's config file the new config """
-        extra_conf = self._get_resource("extra_conf.py")
-        self._save_file(base, "conf.py", extra_conf, "a")
+        # Append the extra configuration to the configuration file
+        with open(os.path.join(self.source_dir, "conf.py"), "a") as f:
+            f.write(extra_conf)
 
     def _execute_build(self):
         """ Execute the build """
-        src_dir = os.path.join(self.output, '__buildthedocs__', 'source',
-                               self._details["directory"])
-        out_dir = self.output
-        dt_dir = os.path.join(self.output, '__buildthedocs__', 'doctrees')
+        src_dir = self.source_dir
+        out_dir = self.output_dir
+        dt_dir = os.path.join(self.btd_dir, 'doctrees')
 
         # Build the documentation with Sphinx
         builder = sphinx.application.Sphinx(src_dir, src_dir, out_dir, dt_dir,
@@ -163,23 +187,7 @@ class BuildProcess:
     def _cleanup(self):
         """ Execute some cleanup """
         try:
-            shutil.rmtree(os.path.join(self.output, "__buildthedocs__"))
+            #shutil.rmtree(self.btd_dir)
+            pass
         except FileNotFoundError:
             pass
-
-    def _get_resource(self, path, jinja_vars=None):
-        """ Obtain a resource from the package, parse it and return it """
-        content = pkg_resources.resource_string("buildthedocs",
-                                "resources/"+path).decode("utf-8")
-
-        # Parse it as jinja template if needed
-        if jinja_vars is not None:
-            template = jinja2.Template(content)
-            content = template.render(jinja_vars)
-
-        return content
-
-    def _save_file(self, base, name, content, mode="w"):
-        """ Shortcut to save a file """
-        with open(os.path.join(base, name), mode) as f:
-            f.write(content)

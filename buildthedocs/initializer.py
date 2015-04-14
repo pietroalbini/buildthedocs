@@ -9,6 +9,7 @@
 import pkg_resources
 
 from buildthedocs import sources
+from buildthedocs import hooks
 
 
 class Collector:
@@ -78,6 +79,11 @@ class Initializer:
 
 def core_initializer(initializer):
     """ Initialize the core elements of BuildTheDocs """
+    # Register default source providers
     initializer.register_source_provider("local", sources.obtain_local)
     initializer.register_source_provider("url", sources.obtain_url)
     initializer.register_source_provider("git", sources.obtain_git)
+
+    # Register default build hooks
+    initializer.register_hook(hooks.add_versions_chooser)
+    initializer.register_hook(hooks.add_warning)
