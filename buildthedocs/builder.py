@@ -187,7 +187,6 @@ class BuildProcess:
     def _cleanup(self):
         """ Execute some cleanup """
         try:
-            #shutil.rmtree(self.btd_dir)
-            pass
+            shutil.rmtree(self.btd_dir)
         except FileNotFoundError:
             pass
