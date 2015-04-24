@@ -100,6 +100,7 @@ class BuildProcess:
         self.source_dir = os.path.join(self.btd_dir, "source", extra_source)
 
         self._sidebars = []
+        self._sidebar_incremental = 0
 
         # Clean up output directory and recreate them
         try:
@@ -123,9 +124,10 @@ class BuildProcess:
         with open(os.path.join(templates_dir, name), "w") as f:
             f.write(content)
 
-    def add_sidebar(self, name, content):
+    def add_sidebar(self, content):
         """ Add a custom sidebar """
-        name = "sidebar_"+name
+        self._sidebar_incremental += 1
+        name = "sidebar_"+str(self._sidebar_incremental)
 
         self.add_template(name, content, True)
         self._sidebars.append("__btd_"+name+"__.html")
