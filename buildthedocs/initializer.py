@@ -20,14 +20,13 @@ class Collector:
 
     def collect(self, entry_point):
         """ Collect from setuptools entry points """
-        splitted = entry_point.split(':', 1)
-        for one in pkg_resources.iter_entry_points(*splitted):
+        for one in pkg_resources.iter_entry_points(entry_point):
             loaded = one.load()
 
             # Create an initializer instance, and fill it
             initializer = Initializer()
             loaded(initializer)
-            self._collected[one.dist.key] = initializer
+            self._collected[one.dist.key+":"+one.name] = initializer
 
     def apply(self, obj, only=None):
         """ Apply all collector """
@@ -77,13 +76,16 @@ class Initializer:
         return obj
 
 
-def core_initializer(initializer):
-    """ Initialize the core elements of BuildTheDocs """
+def sources_initializer(initializer):
+    """ Initialize the default source providers of BuildTheDocs """
     # Register default source providers
     initializer.register_source_provider("local", sources.obtain_local)
     initializer.register_source_provider("url", sources.obtain_url)
     initializer.register_source_provider("git", sources.obtain_git)
 
+
+def hooks_initializer(initializer):
+    """ Initialize the default hooks of BuildTheDocs """
     # Register default build hooks
     initializer.register_hook(hooks.add_versions_chooser)
     initializer.register_hook(hooks.add_warning)

@@ -54,7 +54,8 @@ setuptools.setup(
             'buildthedocs = buildthedocs.__main__:main',
         ],
         'buildthedocs': [
-            'initializer = buildthedocs.initializer:core_initializer',
+            'sources = buildthedocs.initializer:sources_initializer',
+            'hooks = buildthedocs.initializer:hooks_initializer',
         ],
     },
 

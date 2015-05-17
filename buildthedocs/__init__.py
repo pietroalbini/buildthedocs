@@ -15,7 +15,7 @@ from buildthedocs.builder import Builder
 
 # Setup the initializer
 _initializer = initializer.Collector()
-_initializer.collect('buildthedocs:initializer')
+_initializer.collect('buildthedocs')
 
 
 def build(config, *versions, output="build", source_providers=None):
