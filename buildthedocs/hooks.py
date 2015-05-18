@@ -16,7 +16,7 @@ def add_versions_chooser(builder, process):
         "current_version": process.version,
     })
 
-    process.add_sidebar("versions", sidebar)
+    process.add_sidebar(sidebar)
 
 
 def add_warning(builder, process):
