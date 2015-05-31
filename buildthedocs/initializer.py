@@ -28,6 +28,14 @@ class Collector:
             loaded(initializer)
             self._collected[one.dist.key+":"+one.name] = initializer
 
+    def append(self, dist, initializer):
+        """ Add an initializer """
+        if dist in self._collected:
+            raise NameError("An initializer with the {} key already exists"
+                            .formate(dist))
+
+        self._collected[dist] = initializer
+
     def apply(self, obj, only=None):
         """ Apply all collector """
         # If "only" is provided, apply initializers only from that packages

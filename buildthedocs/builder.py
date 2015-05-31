@@ -39,7 +39,7 @@ class Builder:
 
         # If no initializator is provided, use the global one
         if initializer is None:
-            initializer = buildthedocs._initializer
+            initializer = buildthedocs._collector
 
         # Apply all the wanted initializators to this object
         initializer.apply(self, only_inits)
