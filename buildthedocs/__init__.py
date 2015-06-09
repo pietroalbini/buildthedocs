@@ -24,7 +24,7 @@ _initializer = initializer.Initializer()
 _collector.append("__runtime__", _initializer)
 
 
-def build(config, *versions, output="build"):
+def build(config, *versions, output="build", dists=None):
     """ Build from a configuration file """
     # If the passed configuration is a path to a file load the content of it
     # as YAML
@@ -32,7 +32,7 @@ def build(config, *versions, output="build"):
         with open(config) as f:
             config = yaml.load(f.read())
 
-    builder = Builder(config, output)
+    builder = Builder(config, output, dists)
 
     return builder.build(*versions)
 

@@ -28,7 +28,7 @@ class BuildError(Exception):
 class Builder:
     """ Instance of a builder """
 
-    def __init__(self, config, output_to, only_inits=None, initializer=None):
+    def __init__(self, config, output_to, dists=None, initializer=None):
         self.versions = {version["name"]: version
                          for version in config["versions"]}
         self.ordered_versions = config["versions"]
@@ -42,7 +42,7 @@ class Builder:
             initializer = buildthedocs._collector
 
         # Apply all the wanted initializators to this object
-        initializer.apply(self, only_inits)
+        initializer.apply(self, dists)
 
     def register_source_provider(self, name, provider):
         """ Register a new source provider """
