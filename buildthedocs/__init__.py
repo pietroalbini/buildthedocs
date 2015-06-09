@@ -21,7 +21,7 @@ _collector.collect('buildthedocs')
 
 # Setup the global initializer (registering stuff at runtime)
 _initializer = initializer.Initializer()
-_collector.append("__runtime__", _initializer)
+_collector.append("buildthedocs:runtime", _initializer)
 
 
 def build(config, *versions, output="build", dists=None):
