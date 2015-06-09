@@ -21,10 +21,19 @@ def error(message, *replace):
 @click.argument("config")
 @click.argument("version", nargs=-1)
 @click.option("-o", "--output", help="The output directory", default="")
-def main(config, version, output):
+@click.option("--dist", "extra_dists", multiple=True, default=None,
+              help="Allow an extra distribution")
+@click.option("--default-dists", help="", is_flag=True)
+def main(config, version, output, default_dists, extra_dists):
     """ Build the documentations """
     # Default output path is ./build
     if output == "":
         output = os.path.realpath("build")
 
-    buildthedocs.build(config, *version, output=output)
+    dists = [] if default_dists or extra_dists else None
+    if default_dists:
+        dists += ["buildthedocs:sources", "buildthedocs:hooks"]
+    if dists is not None:
+        dists += extra_dists
+
+    buildthedocs.build(config, *version, output=output, dists=dists)
