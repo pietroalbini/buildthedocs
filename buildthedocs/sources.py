@@ -9,14 +9,14 @@
 import os
 import urllib.request
 import shutil
-
-import pygit2
+import subprocess
 
 
 def obtain_git(config, dest):
     """ Obtain the source code from a git repository """
-    pygit2.clone_repository(config["source"]["url"], dest, checkout_branch=
-                            config["source"]["checkout"])
+    subprocess.call(["git", "clone", config["source"]["url"], dest, "-q"])
+    subprocess.call(["git", "--git-dir="+dest+"/.git", "--work-tree="+dest,
+                     "checkout", config["source"]["checkout"], "-q"])
 
 
 def obtain_url(config, dest):

@@ -22,6 +22,7 @@ wish.
    source-providers
    scripting
    api
+   changelog
    license
 
 .. _Sphinx: http://sphinx-doc.org
