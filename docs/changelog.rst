@@ -10,6 +10,6 @@ BuildTheDocs changelog
 BuildTheDocs 1.0.1
 ==================
 
-*Not yet released.*
+*Released on July 18th, 2015.*
 
 * Moved away from pygit2, while keeping the same functionalities.

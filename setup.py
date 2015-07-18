@@ -26,7 +26,7 @@ import setuptools
 
 setuptools.setup(
     name = "buildthedocs",
-    version = "1.0",
+    version = "1.0.1",
     url = "http://buildthedocs.pietroalbini.io",
 
     license = 'MIT',
