@@ -41,7 +41,6 @@ setuptools.setup(
         'sphinx',
         'jinja2',
         'pyyaml',
-        'pygit2',
         'click',
     ],
 
