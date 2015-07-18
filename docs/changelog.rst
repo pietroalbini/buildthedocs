@@ -7,7 +7,7 @@ BuildTheDocs changelog
 .. _changelog-1-0-1:
 
 ==================
-BuildTheDocs 1.0.1
+BuildTheDocs 1.0.2
 ==================
 
 *Released on July 18th, 2015.*
