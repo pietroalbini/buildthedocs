@@ -12,7 +12,6 @@ import os
 
 import yaml
 import sphinx.application
-import pygit2
 import pkg_resources
 import jinja2
 
