@@ -1,0 +1,18 @@
+versions:
+- name: "dev"
+  source:
+    provider: local
+    path: docs
+  directory: .
+  title: Development
+  notice: unstable
+  warning: This documentation is for the unstable and in-development version of BuildTheDocs!
+- name: "1.0"
+  source:
+    provider: git
+    url: .
+    checkout: v1.0.2
+  directory: docs
+  title: BuildTheDocs 1.0
+  notice: null
+  warning: null

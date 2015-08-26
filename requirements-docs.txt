@@ -1,0 +1,2 @@
+buildthedocs==1.0.2
+pietroalbini-sphinx-themes==1.*
