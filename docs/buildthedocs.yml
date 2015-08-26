@@ -11,7 +11,7 @@ versions:
   source:
     provider: git
     url: .
-    checkout: v1.0.2
+    checkout: v1.0.3
   directory: docs
   title: BuildTheDocs 1.0
   notice: null

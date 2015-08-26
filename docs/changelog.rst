@@ -4,7 +4,17 @@
 BuildTheDocs changelog
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. _changelog-1-0-1:
+.. _changelog-1-0-3:
+
+==================
+BuildTheDocs 1.0.3
+==================
+
+*Released on August 26th, 2015.*
+
+* Revamped its own documentation theme.
+
+.. _changelog-1-0-2:
 
 ==================
 BuildTheDocs 1.0.2
