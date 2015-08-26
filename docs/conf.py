@@ -15,6 +15,7 @@
 
 import sys
 import os
+import pietroalbini_sphinx_themes
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -30,7 +31,7 @@ import os
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.intersphinx',
+#    'sphinx.ext.intersphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -47,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'BuildTheDocs'
-copyright = '2015, Pietro Albini'
+copyright = '2015 Pietro Albini'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -109,7 +110,7 @@ html_theme = 'buildthedocs'
 #html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = ['_themes']
+html_theme_path = ['_themes', pietroalbini_sphinx_themes.themes_path()]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
