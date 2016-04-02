@@ -33,10 +33,3 @@ def obtain_url(config, dest):
 def obtain_local(config, dest):
     """ Obtain the source from the local filesystem """
     shutil.copytree(config["source"]["path"], dest)
-
-
-_available = {
-    "git": obtain_git,
-    "url": obtain_url,
-    "local": obtain_local,
-}

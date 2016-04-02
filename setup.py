@@ -52,6 +52,10 @@ setuptools.setup(
         'console_scripts': [
             'buildthedocs = buildthedocs.__main__:main',
         ],
+        'buildthedocs': [
+            'sources = buildthedocs.initializer:sources_initializer',
+            'hooks = buildthedocs.initializer:hooks_initializer',
+        ],
     },
 
     include_package_data = True,
