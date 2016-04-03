@@ -1,19 +1,18 @@
+.. Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
+   Released under the CC-BY 4.0 International license
+
 .. _quickstart:
 
-~~~~~~~~~~~~~~~~~~~~~~~~
+========================
 Start using BuildTheDocs
-~~~~~~~~~~~~~~~~~~~~~~~~
+========================
 
-This tutorial will teach you how to configure and build your first project
-with BuildTheDocs. It assumes you've installed the tool, otherwise follow
-the :ref:`install` charapter first.
-
-In this tutorial we'll build this documentation both for the latest version
-and the development branch.
+Now that you've :ref:`installed <install>` BuildTheDocs, it's time to build
+your first project with it. In this tutorial we're going to build the master
+branch of BuildTheDocs and the ``1.0`` release of it.
 
 .. _quickstart-config:
 
-================================
 Creating the configuration files
 ================================
 
@@ -21,7 +20,9 @@ In order to build a project, BuildTheDocs needs to know some piece of
 information about it. These information are provided by a YAML-formatted
 configuration file.
 
-Here there is the configuration file for the project we want to build::
+Open your favourite text editor and put this content in it:
+
+.. code-block:: plain
 
    versions:
      - name: "dev"
@@ -44,32 +45,48 @@ Here there is the configuration file for the project we want to build::
        notice: null
        warning: null
 
-So, let's see what this configuration file does: in the ``versions`` section
-we start defining all the versions we want to build. Each version has a name,
-the pieces of information about how to get the source, the directory in which
-the documentation is, and some pieces of information in order to compose the
-version chooser in a better way.
+Let's analyze this configuration file:
 
-You can learn more about this in :ref:`config` charapter of the documentation.
+* Every version we want to build is defined as an item in the top-level
+  ``versions`` list.
+
+* Every version has a codename in the ``name`` key, which will be used in the
+  docs' URL.
+
+* The :ref:`information needed <source-providers>` to fetch the source code is
+  in the ``source`` key.
+
+* If the documentation isn't in the root of the fetched source code, you can
+  define the directory in which it is with the ``directory`` key.
+
+* You can customize the entry of this version in the version chooser with the
+  ``title`` (required) and the ``notice`` (can be ``null``) keys.
+
+* You can also put a warning in the top of the documentation with the
+  ``warning`` key.
+
+If you want to learn more about how configuration files works, check out the
+:ref:`chapter about configuration files <config>`.
 
 .. _quickstart-build:
 
-====================================
 Building from the configuration file
 ====================================
 
-Then, you need to actually build the project, so you can run the following
-command, assuming the configuration file is located in ``config.yml``::
+Now that you've written the configuration file, you can actually build the
+project. In order to do that, you can run the following command, assuming the
+configuration file is located in ``config.yml``::
 
    $ buildthedocs config.yml
 
-That command will build all versions present in that configuration file, and
-place the output in the ``build`` directory. If you want to build only some
-versions or change the output directory, you can do so::
+That command will build all versions you defined, and place the output in the
+``build`` directory. If you want to build only some versions or change the
+output directory, you can easily do so::
 
    $ buildthedocs -o output/ config.yml 1.0 dev
 
-==========
+.. _quickstart-growing-up:
+
 Growing up
 ==========
 

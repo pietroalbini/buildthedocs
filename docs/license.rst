@@ -1,41 +1,47 @@
+.. Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
+   Released under the CC-BY 4.0 International license
+
 .. _license:
 
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 BuildTheDocs licenses
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 
 The BuildTheDocs source code is released under the MIT license, while this
 documentation under the CreativeCommons Attribution 4.0 International.
 
 .. _license-mit:
 
-===============
 The MIT license
 ===============
 
-Copyright (c) 2015 Pietro Albini
+The source code of BuildTheDocs is released under the MIT license. This means
+you can do everything you want with it if you provide attribution to me.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+.. code-block:: plain
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+   Copyright (c) 2015 Pietro Albini
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to
+   deal in the Software without restriction, including without limitation the
+   rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+   sell copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+   IN THE SOFTWARE.
 
 .. _license-cc-by:
 
-=============================================
 CreativeCommons Attribution 4.0 International
 =============================================
 
@@ -99,7 +105,6 @@ Section 1 - Definitions
 #. You means the individual or entity exercising the Licensed Rights
    under this Public License. Your has a corresponding meaning.
 
-
 Section 2 - Scope
 -----------------
 
@@ -162,8 +167,6 @@ Section 2 - Scope
        directly or through a collecting society under any voluntary or
        waivable statutory or compulsory licensing scheme. In all other cases
        the Licensor expressly reserves any right to collect such royalties.
-
-
 
 Section 3 - License Conditions
 ------------------------------

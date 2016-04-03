@@ -1,16 +1,19 @@
+.. Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
+   Released under the CC-BY 4.0 International license
+
 .. _source-providers:
 
-~~~~~~~~~~~~~~~~
+================
 Source providers
-~~~~~~~~~~~~~~~~
+================
 
-Here you can see which source providers are available by default. Also, you
-can learn how to build your own source providers, and how to use them.
+Source providers are the way to fetch your project's source code while building
+your documentation. There are some useful ones bundled with BuildTheDocs, but
+you can also create your own ones!
 
 .. _source-providers-local:
 
-==================
-The local provider 
+The local provider
 ==================
 
 The local provider is the simplest one available, which simply takes a
@@ -19,7 +22,7 @@ directory from the local filesystem and copy that to the output destination.
 It requires the ``path`` key, which should contain the path where the source
 is located.
 
-::
+.. code-block:: plain
 
    source:
      provider: local
@@ -27,7 +30,6 @@ is located.
 
 .. _source-providers-url:
 
-================
 The url provider
 ================
 
@@ -38,7 +40,7 @@ It requires the ``url`` key, which should contain the url to the file, and the
 ``compression`` key, which must contain the `name of the compression
 algorithm`_ used by the archive.
 
-::
+.. code-block:: plain
 
    source:
      provider: url
@@ -47,7 +49,6 @@ algorithm`_ used by the archive.
 
 .. _source-providers-git:
 
-================
 The git provider
 ================
 
@@ -58,7 +59,7 @@ It requires the ``url`` key, which should contains the url to the git repo,
 and the ``checkout`` key, which should contains the branch you want to
 checkout to.
 
-::
+.. code-block:: plain
 
    source:
      provider: git
@@ -67,7 +68,6 @@ checkout to.
 
 .. _source-providers-custom:
 
-=================================
 Creating your own source provider
 =================================
 
@@ -77,7 +77,9 @@ hasn't a source provider by default, you can easily create that.
 A source provider is any callable Python object, which must accept two
 arguments: the version configuration and the destination of the source code.
 For the current example, we're going to replicate the ``local`` builtin source
-provider::
+provider:
+
+.. code-block:: python
 
    import shutil
 
@@ -88,7 +90,9 @@ provider::
 Then you can start using it. Remember that you can use custom providers only
 when building from a script, making an instance of the builder (it's explained
 how to do so in the ":ref:`scripting-custom`" section of the documentation),
-as so::
+as so:
+
+.. code-block:: python
 
    import yaml
    import buildthedocs
@@ -101,7 +105,9 @@ as so::
    builder.build()
 
 That snippet will register the provider we wrote before under the ``custom``
-name, and we can now use it in the configuration file::
+name, and we can now use it in the configuration file:
+
+.. code-block:: plain
 
    source:
      provider: custom

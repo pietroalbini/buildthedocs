@@ -1,65 +1,87 @@
+.. Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
+   Released under the CC-BY 4.0 International license
+
 .. _config:
 
-~~~~~~~~~~~~~~~~~~~~~~~
+=======================
 The configuration files
-~~~~~~~~~~~~~~~~~~~~~~~
+=======================
 
-Here is explained how to write configuration files and how them works.
+BuildTheDocs needs to know what it should build and how, and the way to tell it
+those information is to write a configuration file. BuildTheDocs' configuration
+files are written in YAML, a simple, elegant and human-readable serialization
+format.
 
 .. _config-yaml:
 
-============
 YAML primers
 ============
-
-BuildTheDocs configuration files are written in YAML, a simple, beautiful
-serialization format. This section explains the basics of it.
 
 YAML represents keys and values, grouped in dictionaries and lists. Each
 key-value pair must be in its own line, and grouped in its parent with
 indentation. Keys and values are separated with a ``:``, and quotes aren't
 needed for strings (but are supported). Lists are marked with a ``-`` in front
-of the key-value pair.
+of the key-value pair. It also supports comments.
 
-For example, this is a valid YAML file::
+For example, this is a valid YAML file:
+
+.. code-block:: plain
+
+   # Hey, that's a comment!
 
    name: John
    age: 27
    interests:
-   - programming
-   - climbing
+     - programming
+     - hiking
    projects:
      foo:
        status: completed
      bar:
        status: in progress
        tasks:
-       - name: complete the status bar
-         priority: low
-       - name: fix authentication
-         priority: high
+         - name: complete the status bar
+           priority: low
+         - name: fix authentication
+           priority: high
 
-If you want to learn more, you can read the official `YAML specification`_.
+If you want to learn more, check out the official `YAML specification`_.
 
 .. _config-anatomy:
 
-===============================
 Anatomy of a configuration file
 ===============================
 
 As said before, the BuildTheDocs configuration files are YAML-formatted, so
-they should end with ``.yml`` or ``.yaml``.
+they should end with ``.yml`` or ``.yaml``. They are made of two different
+sections: a metadata part, which currently contains nothing, and an array of
+versions you want to build.
 
-They are composed by two different sections: a metadata part, which actually
-contains nothing, and an array of versions you want to build.
+.. code-block:: plain
 
-If you don't want to write the file from scratch, you can customize the
-configuration file in the :ref:`quickstart-config` section of the
-documentation.
+   versions:
+
+     - name: "dev"
+       source:
+         provider: local
+         path: ~/projects/myproject/docs
+       directory: .
+       title: Development
+       notice: unstable
+       warning: This isn't released yet!
+
+     - name: "1.0"
+       source:
+         provider: git
+         url: https://git.example.com/myproject.git
+         checkout: "1.0"
+       directory: docs
+       title: MyProject 1.0
+       notice: null
+       warning: null
 
 .. _config-versions:
 
-====================
 The versions section
 ====================
 

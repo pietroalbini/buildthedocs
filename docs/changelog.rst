@@ -1,12 +1,14 @@
+.. Copyright (c) 2015 Pietro Albini <pietro@pietroalbini.io>
+   Released under the CC-BY 4.0 International license
+
 .. _changelog:
 
-~~~~~~~~~~~~~~~~~~~~~~
+======================
 BuildTheDocs changelog
-~~~~~~~~~~~~~~~~~~~~~~
+======================
 
 .. _changelog-1-0-3:
 
-==================
 BuildTheDocs 1.0.3
 ==================
 
@@ -16,7 +18,6 @@ BuildTheDocs 1.0.3
 
 .. _changelog-1-0-2:
 
-==================
 BuildTheDocs 1.0.2
 ==================
 
