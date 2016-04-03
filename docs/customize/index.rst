@@ -19,3 +19,4 @@ your documentation unique!
    :maxdepth: 2
 
    source-providers
+   hooks
