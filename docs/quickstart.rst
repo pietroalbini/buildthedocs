@@ -97,4 +97,4 @@ further.
 Here are some topics you may want to know:
 
 * :ref:`scripting`
-* :ref:`source-providers-custom`
+* :ref:`customize`

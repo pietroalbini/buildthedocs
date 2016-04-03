@@ -35,11 +35,12 @@ Narrative documentation
 =======================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    config
    source-providers
    scripting
+   customize/index
 
 .. _index-reference:
 
