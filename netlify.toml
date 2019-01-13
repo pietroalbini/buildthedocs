@@ -1,0 +1,24 @@
+[build]
+publish = "build/docs/"
+command = "make docs"
+
+# Permanent redirect from the netlify domain to the canonical domain
+[[redirects]]
+from = "https://org-pietroalbini-buildthedocs.netlify.com/*"
+to = "https://buildthedocs.pietroalbini.org/:splat"
+status = 301
+force = true
+
+# Redirect to the current version
+[[redirects]]
+from = "/"
+to = "/1.0/"
+
+# Security headers
+[[headers]]
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-Xss-Protection = "1; mode=block"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "no-referrer"

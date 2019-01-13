@@ -58,6 +58,7 @@ build/envs/docs: requirements-docs.txt
 build/docs: build/envs/docs docs/**
 	@rm -rf build/docs/*
 	build/envs/docs/bin/buildthedocs docs/buildthedocs.yml -o build/docs
+	cp docs/404.html build/docs
 
 
 # Cleanup
