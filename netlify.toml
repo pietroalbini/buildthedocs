@@ -13,6 +13,7 @@ force = true
 [[redirects]]
 from = "/"
 to = "/1.0/"
+force = true
 
 # Security headers
 [[headers]]
